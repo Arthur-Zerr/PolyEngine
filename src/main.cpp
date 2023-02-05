@@ -15,10 +15,10 @@
 #include "engine/VBO.h"
 #include "engine/EBO.h"
 #include "engine/Texture.h"
+#include "engine/Camera.h"
 
-
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 1280
+#define HEIGHT 720
 
 // Vertices coordinates
 // Vertices coordinates
@@ -78,6 +78,8 @@ int main() {
     }
     gladLoadGL();
 
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
     Engine::Shader shaderProgram("shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
 
     // Generates Vertex Array Object and binds it
@@ -100,17 +102,13 @@ int main() {
     VBO1.UnBind();
     EBO1.UnBind();
 
-    GLuint uniId = glGetUniformLocation(shaderProgram.Id, "scale");
-
-
     // Texture
     Engine::Texture groundTexture("textures/ground.jpg", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
     groundTexture.textUnit(shaderProgram, "tex0", 0);
 
-    float rotation = 0.0f;
-    double prevTime = glfwGetTime();
-
     glEnable(GL_DEPTH_TEST);
+
+    Engine::Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
     while (!glfwWindowShouldClose(window)) {
         // Update Stuff
@@ -124,30 +122,8 @@ int main() {
 
         shaderProgram.Activate();
 
-        double crntTime = glfwGetTime();
-        if (crntTime - prevTime >= 1 / 60) {
-            rotation += 0.5f;
-            prevTime = crntTime;
-        }
-
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 proj = glm::mat4(1.0f);
-
-        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-        proj = glm::perspective(glm::radians(45.0f), float(WIDTH / HEIGHT), 0.1f, 100.0f);
-
-        int modelLoc = glGetUniformLocation(shaderProgram.Id, "model");
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-        int viewLoc = glGetUniformLocation(shaderProgram.Id, "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-        int projLoc = glGetUniformLocation(shaderProgram.Id, "proj");
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
-        glUniform1f(uniId, 0.5f);
+        camera.Inputs(window);
+        camera.Matrix(45.f, 0.1f, 100.f, shaderProgram, "camMatrix");
 
         groundTexture.Bind();
         VAO1.Bind();
