@@ -6,6 +6,7 @@
 #define POLY_EBO_H
 
 #include <glad/glad.h>
+#include <vector>
 
 namespace Engine {
 
@@ -13,7 +14,7 @@ namespace Engine {
     public:
         GLuint Id;
 
-        EBO(GLuint *indices, GLsizeiptr size);
+        EBO(std::vector<GLuint> &indices);
 
         void Bind();
 

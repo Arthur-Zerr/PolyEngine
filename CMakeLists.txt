@@ -12,7 +12,7 @@ file(GLOB_RECURSE SOURCE_FILES
 file(GLOB_RECURSE HEADER_FILES
         ${CMAKE_SOURCE_DIR}/src/*.h)
 
-add_executable(PolyRPG src/main.cpp src/glad.c libs/stb/stb_image.h src/stb.cpp ${HEADER_FILES} ${SOURCE_FILES})
+add_executable(PolyRPG src/main.cpp src/glad.c libs/stb/stb_image.h src/stb.cpp libs/json/json.h ${HEADER_FILES} ${SOURCE_FILES})
 
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(PolyRPG glfw)
@@ -37,4 +37,11 @@ file(GLOB_RECURSE TEXTURE_FILES
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/textures")
 add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/textures")
 
+
+#Copy Objects
+file(GLOB_RECURSE TEXTURE_FILES
+        ${CMAKE_SOURCE_DIR}/assets/objects/*.gltf)
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/objects")
+add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
 

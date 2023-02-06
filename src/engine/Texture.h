@@ -14,10 +14,10 @@ namespace Engine {
     class Texture {
     public:
         GLuint Id;
-        GLenum type;
+        const char *type;
         GLuint unit;
 
-        Texture(const char *image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType);
+        Texture(const char *image, const char * texType, GLenum slot);
 
         void textUnit(Shader &shader, const char *uniform, GLuint unit);
 

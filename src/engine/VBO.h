@@ -6,13 +6,15 @@
 #define POLY_VBO_H
 
 #include <glad/glad.h>
+#include <vector>
+#include "Vertex.h"
 
 namespace Engine {
     class VBO {
     public:
         GLuint Id;
 
-        VBO(GLfloat *verticies, GLsizeiptr size);
+        VBO(std::vector<Vertex> &vertices);
 
         void Bind();
 
