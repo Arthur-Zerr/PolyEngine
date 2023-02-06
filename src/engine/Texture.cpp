@@ -4,8 +4,8 @@
 
 #include "Texture.h"
 
-Engine::Texture::Texture(const char *image, GLenum type, GLenum slot, GLenum format, GLenum pixelType) {
-    this->type = type;
+Engine::Texture::Texture(const char *image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType) {
+    this->type = texType;
 
     int widthImg, heightImg, numColCh;
     stbi_set_flip_vertically_on_load(true);
@@ -13,7 +13,8 @@ Engine::Texture::Texture(const char *image, GLenum type, GLenum slot, GLenum for
     unsigned char *bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
 
     glGenTextures(1, &this->Id);
-    glActiveTexture(slot);
+    glActiveTexture(GL_TEXTURE0 + slot);
+    unit = slot;
 
     glBindTexture(type, this->Id);
 
@@ -38,6 +39,7 @@ void Engine::Texture::textUnit(Engine::Shader &shader, const char *uniform, GLui
 }
 
 void Engine::Texture::Bind() {
+    glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(type, this->Id);
 }
 

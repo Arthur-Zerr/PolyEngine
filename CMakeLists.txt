@@ -28,13 +28,13 @@ file(GLOB_RECURSE SHADER_FILES
         ${CMAKE_SOURCE_DIR}/src/shaders/*.glsl)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/shaders")
-add_custom_command(TARGET PolyRPG POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SHADER_FILES} "${CMAKE_CURRENT_BINARY_DIR}/shaders")
+add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SHADER_FILES} "${CMAKE_CURRENT_BINARY_DIR}/shaders")
 
 #Copy textures
 file(GLOB_RECURSE TEXTURE_FILES
         ${CMAKE_SOURCE_DIR}/assets/textures/*.jpg)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/textures")
-add_custom_command(TARGET PolyRPG POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/textures")
+add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/textures")
 
 

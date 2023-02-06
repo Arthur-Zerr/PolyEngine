@@ -15,8 +15,9 @@ namespace Engine {
     public:
         GLuint Id;
         GLenum type;
+        GLuint unit;
 
-        Texture(const char *image, GLenum type, GLenum slot, GLenum format, GLenum pixelType);
+        Texture(const char *image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType);
 
         void textUnit(Shader &shader, const char *uniform, GLuint unit);
 
