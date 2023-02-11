@@ -8,11 +8,14 @@ set(INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/")
 file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/src/*.cpp)
 
+file(GLOB_RECURSE INCLUDE_SOURCE_FILES
+        ${CMAKE_SOURCE_DIR}/libs/*.cpp)
+
 # Add header files
 file(GLOB_RECURSE HEADER_FILES
         ${CMAKE_SOURCE_DIR}/src/*.h)
 
-add_executable(PolyRPG src/main.cpp src/glad.c libs/stb/stb_image.h src/stb.cpp libs/json/json.h ${HEADER_FILES} ${SOURCE_FILES})
+add_executable(PolyRPG src/main.cpp src/glad.c src/stb.cpp src/tinygltf.cpp ${HEADER_FILES} ${SOURCE_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h src/tinyobj.cpp)
 
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(PolyRPG glfw)
@@ -39,9 +42,15 @@ add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_
 
 
 #Copy Objects
-file(GLOB_RECURSE TEXTURE_FILES
-        ${CMAKE_SOURCE_DIR}/assets/objects/*.gltf)
+file(GLOB_RECURSE OBJECT_FILES
+        ${CMAKE_SOURCE_DIR}/assets/objects/*.obj)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/objects")
-add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
+add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${OBJECT_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
 
+#Copy MTL
+file(GLOB_RECURSE MTL_FILES
+        ${CMAKE_SOURCE_DIR}/assets/objects/*.mtl)
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/objects")
+add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${MTL_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")

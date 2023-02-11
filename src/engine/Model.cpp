@@ -6,7 +6,7 @@
 
 Engine::Model::Model(const char *file)
 {
-    std::string text = getFileContent(file);
+    std::string text = Engine::File::File::LoadFile(file);
     this->JSON = json::parse(text);
 
     this->file = file;
@@ -144,7 +144,7 @@ std::vector<unsigned char> Engine::Model::getData()
     // Store raw text data into bytesText
     std::string fileStr = std::string(file);
     std::string fileDirectory = fileStr.substr(0, fileStr.find_last_of('/') + 1);
-    bytesText = getFileContent((fileDirectory + uri).c_str());
+    bytesText =  Engine::File::File::LoadFile(((fileDirectory + uri).c_str()));
 
     // Transform the raw text data into bytes and put them in a vector
     std::vector<unsigned char> data(bytesText.begin(), bytesText.end());

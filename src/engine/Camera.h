@@ -29,11 +29,12 @@ namespace Engine {
         int width;
         int height;
 
-        float speed = 0.1f;
-        float sensitivity = 100.0f;
+        float speed = 0.001f;
+        float sensitivity = 25.0f;
 
         Camera(int width, int height, glm::vec3 position);
 
+        void UpdateWindowSize(int width, int height);
         void UpdateMatrix(float FOVdeg, float nearPlane, float farPlane);
 
         void Matrix(Shader &shader, const char *uniform);

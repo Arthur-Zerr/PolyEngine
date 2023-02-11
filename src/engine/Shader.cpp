@@ -4,25 +4,10 @@
 
 #include "Shader.h"
 
-std::string Engine::getFileContent(const char *filename) {
-    std::ifstream in(filename, std::ios::binary);
-    if (in) {
-        std::string contents;
-        in.seekg(0, std::ios::end);
-        contents.resize(in.tellg());
-        in.seekg(0, std::ios::beg);
-        in.read(&contents[0], contents.size());
-        in.close();
-        return (contents);
-    }
-    throw (errno);
-}
-
-
-Engine::Shader::Shader(const char *vertexFile, const char *fragmentFile) {
-
-    std::string vertexCode = getFileContent(vertexFile);
-    std::string fragmentCode = getFileContent(fragmentFile);
+Engine::Shader::Shader(const char *vertexFile, const char *fragmentFile)
+{
+    std::string vertexCode = Engine::File::File::LoadFile(vertexFile);
+    std::string fragmentCode = Engine::File::File::LoadFile(fragmentFile);
 
     // Convert the shader source strings into character arrays
     const char *vertexSource = vertexCode.c_str();
@@ -63,26 +48,33 @@ Engine::Shader::Shader(const char *vertexFile, const char *fragmentFile) {
 
 }
 
-void Engine::Shader::Activate() {
+void Engine::Shader::Activate()
+{
     glUseProgram(Id); // Use Shader program
 }
 
-void Engine::Shader::Dispose() {
+void Engine::Shader::Dispose()
+{
     glDeleteProgram(Id);
 }
 
-void Engine::Shader::compileErrors(unsigned int shader, const char *type) {
+void Engine::Shader::compileErrors(unsigned int shader, const char *type)
+{
     GLint hasCompiled;
     char infoLog[1024];
-    if (type != "PROGRAM") {
+    if (type != "PROGRAM")
+    {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
-        if (hasCompiled == GL_FALSE) {
+        if (hasCompiled == GL_FALSE)
+        {
             glGetShaderInfoLog(shader, 1024, NULL, infoLog);
             std::cout << "SHADER_COMPILE_ERROR for:" << type << "\n" << std::endl;
         }
-    } else {
+    } else
+    {
         glGetProgramiv(shader, GL_COMPILE_STATUS, &hasCompiled);
-        if (hasCompiled == GL_FALSE) {
+        if (hasCompiled == GL_FALSE)
+        {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
             std::cout << "SHADER_LINKING_ERROR for:" << type << "\n" << std::endl;
         }

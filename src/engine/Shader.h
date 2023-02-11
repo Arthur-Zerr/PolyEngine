@@ -7,16 +7,13 @@
 
 #include <glad/glad.h>
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <cerrno>
 
-namespace Engine {
+#include "helper/File.h"
 
-    std::string getFileContent(const char *filename);
-
-    class Shader {
+namespace Engine
+{
+    class Shader
+    {
 
     public:
         GLuint Id;
