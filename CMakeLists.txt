@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(PolyRPG)
+project(PolyEditor)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -15,30 +15,30 @@ file(GLOB_RECURSE INCLUDE_SOURCE_FILES
 file(GLOB_RECURSE HEADER_FILES
         ${CMAKE_SOURCE_DIR}/src/*.h)
 
-add_executable(PolyRPG src/main.cpp src/glad.c src/stb.cpp src/tinygltf.cpp ${HEADER_FILES} ${SOURCE_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h src/tinyobj.cpp)
+add_executable(PolyEditor src/main.cpp src/glad.c src/stb.cpp src/tinygltf.cpp ${HEADER_FILES} ${SOURCE_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h src/tinyobj.cpp src/editor/CustomImGuiStyle.h src/editor/EditorView.cpp src/editor/EditorView.h src/editor/views/FileViewExplorer.cpp src/editor/views/FileViewExplorer.h src/editor/views/BaseView.h src/editor/views/BaseView.cpp)
 
 find_package(glfw3 3.3 REQUIRED)
-target_link_libraries(PolyRPG glfw)
+target_link_libraries(PolyEditor glfw)
 
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(PolyRPG OpenGL::GL)
+target_link_libraries(PolyEditor OpenGL::GL)
 
-target_include_directories(PolyRPG PUBLIC ${INCLUDE_DIR})
+target_include_directories(PolyEditor PUBLIC ${INCLUDE_DIR})
 
 #Copy shaders
 file(GLOB_RECURSE SHADER_FILES
         ${CMAKE_SOURCE_DIR}/src/shaders/*.glsl)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/shaders")
-add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SHADER_FILES} "${CMAKE_CURRENT_BINARY_DIR}/shaders")
+add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SHADER_FILES} "${CMAKE_CURRENT_BINARY_DIR}/shaders")
 
 #Copy textures
 file(GLOB_RECURSE TEXTURE_FILES
         ${CMAKE_SOURCE_DIR}/assets/textures/*.jpg)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/textures")
-add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/textures")
+add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TEXTURE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/textures")
 
 
 #Copy Objects
@@ -46,11 +46,11 @@ file(GLOB_RECURSE OBJECT_FILES
         ${CMAKE_SOURCE_DIR}/assets/objects/*.obj)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/objects")
-add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${OBJECT_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
+add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${OBJECT_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
 
 #Copy MTL
 file(GLOB_RECURSE MTL_FILES
         ${CMAKE_SOURCE_DIR}/assets/objects/*.mtl)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/objects")
-add_custom_command(TARGET PolyRPG PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${MTL_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
+add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${MTL_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")

@@ -5,10 +5,10 @@
 #ifndef POLY_VAO_H
 #define POLY_VAO_H
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include "VBO.h"
 
-namespace Engine {
+namespace Engine::Core {
     class VAO {
     public:
         GLuint Id;

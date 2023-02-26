@@ -5,12 +5,14 @@
 #ifndef POLY_VBO_H
 #define POLY_VBO_H
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <vector>
-#include "Vertex.h"
+#include "../Vertex.h"
 
-namespace Engine {
-    class VBO {
+namespace Engine::Core
+{
+    class VBO
+    {
     public:
         GLuint Id;
 

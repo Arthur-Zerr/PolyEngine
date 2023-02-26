@@ -1003,7 +1003,7 @@ static void ShowDemoWindowWidgets()
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Pink");
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Yellow");
             ImGui::TextDisabled("Disabled");
-            ImGui::SameLine(); HelpMarker("The TextDisabled color is stored in ImGuiStyle.");
+            ImGui::SameLine(); HelpMarker("The TextDisabled color is stored in CustomImGuiStyle.");
             ImGui::TreePop();
         }
 
@@ -3876,7 +3876,7 @@ static void ShowDemoWindowTables()
 
     // About Styling of tables
     // Most settings are configured on a per-table basis via the flags passed to BeginTable() and TableSetupColumns APIs.
-    // There are however a few settings that a shared and part of the ImGuiStyle structure:
+    // There are however a few settings that a shared and part of the CustomImGuiStyle structure:
     //   style.CellPadding                          // Padding within each cell
     //   style.Colors[ImGuiCol_TableHeaderBg]       // Table header background
     //   style.Colors[ImGuiCol_TableBorderStrong]   // Table outer and header borders
@@ -6212,7 +6212,7 @@ bool ImGui::ShowStyleSelector(const char* label)
 void ImGui::ShowStyleEditor(ImGuiStyle* ref)
 {
     IMGUI_DEMO_MARKER("Tools/Style Editor");
-    // You can pass in a reference ImGuiStyle structure to compare to, revert to and save to
+    // You can pass in a reference CustomImGuiStyle structure to compare to, revert to and save to
     // (without a reference style pointer, we will use one compared locally as a reference)
     ImGuiStyle& style = ImGui::GetStyle();
     static ImGuiStyle ref_saved_style;
@@ -6381,7 +6381,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
             HelpMarker(
                 "Those are old settings provided for convenience.\n"
                 "However, the _correct_ way of scaling your UI is currently to reload your font at the designed size, "
-                "rebuild the font atlas, and call style.ScaleAllSizes() on a reference ImGuiStyle structure.\n"
+                "rebuild the font atlas, and call style.ScaleAllSizes() on a reference CustomImGuiStyle structure.\n"
                 "Using those settings here will give you poor quality results.");
             static float window_scale = 1.0f;
             ImGui::PushItemWidth(ImGui::GetFontSize() * 8);
@@ -8320,7 +8320,7 @@ void ShowExampleAppDocuments(bool* p_open)
 void ImGui::ShowAboutWindow(bool*) {}
 void ImGui::ShowDemoWindow(bool*) {}
 void ImGui::ShowUserGuide() {}
-void ImGui::ShowStyleEditor(ImGuiStyle*) {}
+void ImGui::ShowStyleEditor(CustomImGuiStyle*) {}
 
 #endif
 

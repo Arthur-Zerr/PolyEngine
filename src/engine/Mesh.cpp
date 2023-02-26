@@ -13,9 +13,9 @@ Engine::Mesh::Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, 
     this->vao.Bind();
 
     // Generates Vertex Buffer Object and links it to vertices
-    Engine::VBO vbo(vertices);
+    Engine::Core::VBO vbo(vertices);
     // Generates Element Buffer Object and links it to indices
-    Engine::EBO ebo(indices);
+    Engine::Core::EBO ebo(indices);
 
     // Links vbo to this->vao
     this->vao.LinkAttribute(vbo, 0, 3, GL_FLOAT, sizeof(Vertex), (void *) 0);

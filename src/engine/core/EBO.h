@@ -5,10 +5,10 @@
 #ifndef POLY_EBO_H
 #define POLY_EBO_H
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <vector>
 
-namespace Engine {
+namespace Engine::Core {
 
     class EBO {
     public:

@@ -8,19 +8,16 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define IMGUI_IMPL_OPENGL_LOADER_CUSTOM
-
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_opengl3.h>
-
 #include "engine/Shader.h"
 #include "engine/Camera.h"
 
 #include "engine/Model.h"
 #include "engine/ObjModel.h"
 
-#include "engine/views/DebugView.h"
+#include "editor/EditorView.h"
+
+#include "engine/GameObject.h"
+#include "engine/ObjectComponents/TransformComponent.h"
 
 #define WIDTH  1920
 #define HEIGHT 1080
@@ -35,7 +32,6 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 int main()
 {
     GLFWwindow *window;
-
     /* Initialize the library */
     if (!glfwInit())
     {
@@ -53,7 +49,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
     // Create a window and its OpenGL context
-    window = glfwCreateWindow(WIDTH, HEIGHT, "Poly RPG", NULL, NULL);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "Poly Editor", NULL, NULL);
     if (!window)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -76,21 +72,12 @@ int main()
 //    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    (void) io;
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
     // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight();
+    PolyEngine::Editor::EditorView editorView{window};
+    editorView.Init();
 
     // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330 core");
-
 
     Engine::Shader shaderProgram("shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
     Engine::Shader treeShader("shaders/defaultVert.glsl", "shaders/defaultFrag.glsl");
@@ -116,13 +103,19 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
-    Engine::Views::DebugView debugView;
-
     Engine::Model treeModel("objects/tree.gltf");
     Engine::Models::ObjModel treeObjModel("objects/tree.obj");
     treeObjModel.Load();
 
     Engine::Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
+
+
+    Engine::GameObject gameObject{};
+
+    Engine::ObjectComponents::TransformComponent transformComponent{};
+
+    gameObject.AddComponent(transformComponent);
+
 
     while (!glfwWindowShouldClose(window))
     {
@@ -137,16 +130,8 @@ int main()
             glfwSetWindowShouldClose(window, true);
         }
 
-        // ImGUI stuff
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        debugView.Render();
-
-        ImGui::Render();
         // Render Stuff
-        glViewport(0, 0, width, height);
+        glViewport(0, 0, width * 2, height * 2);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -156,16 +141,13 @@ int main()
         treeModel.Draw(shaderProgram, camera);
         treeObjModel.Draw(treeShader, camera);
 
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        editorView.Render();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-
+    editorView.Dispose();
     shaderProgram.Dispose();
     glfwDestroyWindow(window);
     glfwTerminate();

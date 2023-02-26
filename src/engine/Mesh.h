@@ -8,9 +8,9 @@
 #include <string>
 #include <vector>
 
-#include "VAO.h"
-#include "VBO.h"
-#include "EBO.h"
+#include "core/VAO.h"
+#include "core/VBO.h"
+#include "core/EBO.h"
 #include "Texture.h"
 
 #include "Camera.h"
@@ -26,7 +26,7 @@ namespace Engine
         std::vector<GLuint> indices;
         std::vector<Texture> textures;
 
-        VAO vao;
+        Core::VAO vao;
 
         Mesh(std::vector<Vertex> &vertices, std::vector<GLuint> &indices, std::vector<Texture> &textures);
 
