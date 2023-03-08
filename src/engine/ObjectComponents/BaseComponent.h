@@ -9,7 +9,11 @@ namespace Engine::ObjectComponents
 {
     struct BaseComponent
     {
+    public:
+        bool isActive = true;
+
         virtual void Init() = 0;
+
         virtual void Dispose() = 0;
     };
 }

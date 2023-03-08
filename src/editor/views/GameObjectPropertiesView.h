@@ -13,9 +13,15 @@ namespace PolyEngine::Editor::Views
 {
     class GameObjectPropertiesView : BaseView
     {
+    private:
+        /**
+         * Renders the Position / Rotation inputs
+         */
+        void RenderTransform();
+
     public:
         std::string viewName;
-        
+
         Engine::Scene *currentScene;
         Engine::GameObject *selectedGameObject;
 

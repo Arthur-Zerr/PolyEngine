@@ -12,6 +12,8 @@ PolyEngine::Editor::Views::SceneExplorerView::SceneExplorerView(Engine::Scene *c
     this->selectedGameObject = selectedGameObject;
 }
 
+#pragma region PUBLIC
+
 void PolyEngine::Editor::Views::SceneExplorerView::Init()
 {
 
@@ -30,4 +32,6 @@ void PolyEngine::Editor::Views::SceneExplorerView::Dispose()
 {
 
 }
+
+#pragma endregion PUBLIC
 

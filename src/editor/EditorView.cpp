@@ -6,8 +6,15 @@
 
 PolyEngine::Editor::EditorView::EditorView(GLFWwindow *window)
 {
+    this->currentScene = Engine::Scene{};
+    this->currentGameObject = Engine::GameObject{};
+    this->currentGameObject.name;
+    strcpy(this->currentGameObject.name, "Test");
+
     this->window = window;
 }
+
+#pragma region PUBLIC
 
 void PolyEngine::Editor::EditorView::Init()
 {
@@ -16,11 +23,16 @@ void PolyEngine::Editor::EditorView::Init()
     ImGuiIO &io = ImGui::GetIO();
     (void) io;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.Fonts->AddFontFromFileTTF("fonts/EditorFont.ttf", 14);
+
+    ImFontConfig font_config;
+    font_config.OversampleH = 2;
+    font_config.OversampleV = 2;
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
-    CustomImGuiStyle::SetStyle();
+    CustomImGuiStyle::setDarkStyle();
 
     ImGuiViewport *viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
@@ -39,14 +51,10 @@ void PolyEngine::Editor::EditorView::Render()
                     ImGuiWindowFlags_NoMove;
     window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-
-    ImGuiDockNodeFlags dockspace_flags =
-            ImGuiDockNodeFlags_PassthruCentralNode;
-
     ImGui::Begin("EditorView", nullptr, window_flags);
 
     ImGuiID editorViewId = ImGui::GetID("EditorView");
-    ImGui::DockSpace(editorViewId, ImVec2(0.0f, 0.0f), dockspace_flags);
+    ImGui::DockSpace(editorViewId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 
     if (firstRun)
     {
@@ -68,6 +76,8 @@ void PolyEngine::Editor::EditorView::Render()
     this->gameObjectPropertiesView.Render();
     this->fileViewExplorer.Render();
 
+    ImGui::ShowDemoWindow();
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
@@ -84,16 +94,19 @@ void PolyEngine::Editor::EditorView::Dispose()
     ImGui::DestroyContext();
 }
 
+#pragma endregion PUBLIC
+
+#pragma region PRIVATE
+
 void PolyEngine::Editor::EditorView::renderMenuBar()
 {
     if (ImGui::BeginMenu("File"))
     {
         ImGui::Separator();
-        if (ImGui::MenuItem("Flag: NoSplit", ""))
+        if (ImGui::MenuItem("\uE70C Close", ""))
         {
+            glfwSetWindowShouldClose(window, true);
         }
-
-        ImGui::Separator();
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Edit"))
@@ -122,6 +135,7 @@ void PolyEngine::Editor::EditorView::createDockSpace(ImGuiID viewId)
 {
     ImGui::DockBuilderRemoveNode(viewId);
     ImGui::DockBuilderAddNode(viewId, ImGuiDockNodeFlags_DockSpace);
+
     ImGuiViewport *viewport = ImGui::GetMainViewport();
     ImGui::DockBuilderSetNodeSize(viewId, viewport->Size);
 
@@ -138,3 +152,4 @@ void PolyEngine::Editor::EditorView::createDockSpace(ImGuiID viewId)
     ImGui::DockBuilderFinish(viewId);
 }
 
+#pragma endregion PRIVATE

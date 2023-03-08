@@ -6,8 +6,11 @@
 #define POLYRPG_SCENEEDITORVIEW_H
 
 #include <imgui/imgui.h>
+#include <glad/glad.h>
+#include <iostream>
 
 #include "BaseView.h"
+#include "../../engine/Scene.h"
 
 namespace PolyEngine::Editor::Views
 {
@@ -17,16 +20,28 @@ namespace PolyEngine::Editor::Views
     class SceneEditorView : BaseView
     {
     public:
+        Engine::Scene currentScene;
         std::string viewName;
 
         SceneEditorView();
-
 
         void Init() override;
 
         void Render() override;
 
         void Dispose() override;
+
+    private:
+        int windowWidth, windowHeight;
+        GLuint sceneFramebuffer;
+        GLuint sceneRenderBuffer;
+        GLuint sceneTexture;
+
+        void InitScene();
+        void RenderScene();
+
+        void InitSceneFramebuffer();
+        void RescaleSceneFramebuffer();
     };
 }
 

@@ -15,7 +15,7 @@ file(GLOB_RECURSE INCLUDE_SOURCE_FILES
 file(GLOB_RECURSE HEADER_FILES
         ${CMAKE_SOURCE_DIR}/src/*.h)
 
-add_executable(PolyEditor src/main.cpp src/glad.c src/stb.cpp src/tinygltf.cpp ${HEADER_FILES} ${SOURCE_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h src/tinyobj.cpp src/editor/CustomImGuiStyle.h src/editor/EditorView.cpp src/editor/EditorView.h src/editor/views/FileViewExplorer.cpp src/editor/views/FileViewExplorer.h src/editor/views/BaseView.h src/editor/views/BaseView.cpp)
+add_executable(PolyEditor src/main.cpp src/glad.c src/stb.cpp src/tinygltf.cpp ${HEADER_FILES} ${SOURCE_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h src/tinyobj.cpp src/editor/CustomImGuiStyle.h)
 
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(PolyEditor glfw)
@@ -54,3 +54,10 @@ file(GLOB_RECURSE MTL_FILES
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/objects")
 add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${MTL_FILES} "${CMAKE_CURRENT_BINARY_DIR}/objects")
+
+#Copy Fonts
+file(GLOB_RECURSE FONT_FILES
+        ${CMAKE_SOURCE_DIR}/assets/fonts/*.ttf)
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/fonts")
+add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${FONT_FILES} "${CMAKE_CURRENT_BINARY_DIR}/fonts/")

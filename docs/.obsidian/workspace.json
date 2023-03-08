@@ -20,6 +20,16 @@
             }
           },
           {
+            "id": "97dd60c667b6f608",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.1.15"
+              }
+            }
+          },
+          {
             "id": "2f7b8532a38b200f",
             "type": "leaf",
             "state": {
@@ -31,7 +41,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -158,7 +169,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "929971728b3277cb",
+  "active": "97dd60c667b6f608",
   "lastOpenFiles": [
     "Engine Design/Scene.md",
     "Component Design/Transform Component.md",

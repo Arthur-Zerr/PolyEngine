@@ -6,6 +6,7 @@
 #define POLYRPG_GAMEOBJECT_H
 
 #include <vector>
+#include <glm/glm.hpp>
 
 #include "ObjectComponents/BaseComponent.h"
 
@@ -17,10 +18,29 @@ namespace Engine
         std::vector<ObjectComponents::BaseComponent> components;
 
     public:
+        char name[128] = "";
+
+        float posX = 0.f;
+        float posY = 0.f;
+        float posZ = 0.f;
+
+        float rotX = 0.f;
+        float rotY = 0.f;
+        float rotZ = 0.f;
+
         GameObject();
+
+        bool isActive = true;
+
         void Init();
+
         void AddComponent(Engine::ObjectComponents::BaseComponent &component);
 
+        void RemoveComponent(Engine::ObjectComponents::BaseComponent &component);
+
+        glm::vec3 getVec3Position();
+
+        glm::vec3 getVec3Rotation();
     };
 }
 
