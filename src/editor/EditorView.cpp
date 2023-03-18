@@ -38,6 +38,11 @@ void PolyEngine::Editor::EditorView::Init()
     ImGui::SetNextWindowPos(viewport->Pos);
     ImGui::SetNextWindowSize(viewport->Size);
     ImGui::SetNextWindowViewport(viewport->ID);
+
+    this->sceneExplorerView.Init();
+    this->sceneEditorView.Init();
+//    this->gameObjectPropertiesView.Init();
+    this->fileViewExplorer.Init();
 }
 
 void PolyEngine::Editor::EditorView::Render()
@@ -75,8 +80,6 @@ void PolyEngine::Editor::EditorView::Render()
     this->sceneEditorView.Render();
     this->gameObjectPropertiesView.Render();
     this->fileViewExplorer.Render();
-
-    ImGui::ShowDemoWindow();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

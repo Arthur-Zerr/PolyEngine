@@ -27,7 +27,7 @@ void PolyEngine::Editor::Views::SceneEditorView::Render()
     this->RenderScene();
 
     ImGui::Image(
-            (ImTextureID)this->sceneTexture,
+            (void *) (ImTextureID)this->sceneTexture,
             ImGui::GetContentRegionAvail(),
             ImVec2(0, 1),
             ImVec2(1, 0)
@@ -43,7 +43,6 @@ void PolyEngine::Editor::Views::SceneEditorView::Dispose()
 }
 
 #pragma region PRIVATE
-3zu iop
 void PolyEngine::Editor::Views::SceneEditorView::InitScene()
 {
     glEnable(GL_DEPTH_TEST);
@@ -79,14 +78,13 @@ void PolyEngine::Editor::Views::SceneEditorView::InitSceneFramebuffer()
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
-        std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+        std::cout << "ERROR::FRAMEBUFFER: Framebuffer is not complete!" << std::endl;
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
-
 
 void PolyEngine::Editor::Views::SceneEditorView::RescaleSceneFramebuffer()
 {
@@ -102,4 +100,3 @@ void PolyEngine::Editor::Views::SceneEditorView::RescaleSceneFramebuffer()
 }
 
 #pragma endregion PRIVATE
-
