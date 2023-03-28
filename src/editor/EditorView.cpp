@@ -34,10 +34,8 @@ void PolyEngine::Editor::EditorView::Init()
 
     CustomImGuiStyle::setDarkStyle();
 
-    ImGuiViewport *viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(viewport->Pos);
-    ImGui::SetNextWindowSize(viewport->Size);
-    ImGui::SetNextWindowViewport(viewport->ID);
+
+
 
     this->sceneExplorerView.Init();
     this->sceneEditorView.Init();
@@ -55,9 +53,12 @@ void PolyEngine::Editor::EditorView::Render()
     window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
                     ImGuiWindowFlags_NoMove;
     window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    ImGuiViewport *viewport = ImGui::GetMainViewport();
 
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
     ImGui::Begin("EditorView", nullptr, window_flags);
-
     ImGuiID editorViewId = ImGui::GetID("EditorView");
     ImGui::DockSpace(editorViewId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 
@@ -140,6 +141,9 @@ void PolyEngine::Editor::EditorView::createDockSpace(ImGuiID viewId)
     ImGui::DockBuilderAddNode(viewId, ImGuiDockNodeFlags_DockSpace);
 
     ImGuiViewport *viewport = ImGui::GetMainViewport();
+    std::cout << viewport->Size.x << std::endl;
+    std::cout << viewport->Size.y << std::endl;
+
     ImGui::DockBuilderSetNodeSize(viewId, viewport->Size);
 
     // This variable will track the document node, however we are not using it here as we aren't docking anything into it.

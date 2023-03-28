@@ -7,7 +7,8 @@
 std::string Engine::File::File::LoadFile(const char *filename)
 {
     std::ifstream in(filename, std::ios::binary);
-    if (in) {
+    if (in)
+    {
         std::string contents;
         in.seekg(0, std::ios::end);
         contents.resize(in.tellg());
@@ -16,5 +17,6 @@ std::string Engine::File::File::LoadFile(const char *filename)
         in.close();
         return (contents);
     }
+    std::cout << "Error loading file: " << filename << std::endl;
     throw (errno);
 }

@@ -96,10 +96,8 @@ int main()
 //                lightColor.w);
 //    glUniform3f(glGetUniformLocation(treeShader.Id, "lightPosition"), lightPosition.x, lightPosition.y,
 //                lightPosition.z);
-
-    Engine::Model treeModel("objects/tree.gltf");
-    Engine::Models::ObjModel treeObjModel("objects/tree.obj");
-    treeObjModel.Load();
+//    Engine::Models::ObjModel treeObjModel("objects/tree.obj");
+//    treeObjModel.Load();
 
     Engine::Camera camera(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
@@ -107,6 +105,8 @@ int main()
     {
         int width, height;
         glfwGetWindowSize(window, &width, &height);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.f, 0.f, 0.f, 0.f);
 
 //        camera.UpdateWindowSize(width, height);
 
