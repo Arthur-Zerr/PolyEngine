@@ -5,7 +5,7 @@
 #ifndef POLYRPG_OBJMODEL_H
 #define POLYRPG_OBJMODEL_H
 
-#include <tinyobj/tiny_obj_loader.h>
+#include "tinyobj/tiny_obj_loader.h"
 #include <unordered_map>
 #include <vector>
 

@@ -6,7 +6,7 @@
 #define POLYRPG_GAMEOBJECT_H
 
 #include <vector>
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
 #include "ObjectComponents/BaseComponent.h"
 

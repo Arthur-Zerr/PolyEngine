@@ -5,7 +5,7 @@
 #ifndef POLYRPG_MODEL_H
 #define POLYRPG_MODEL_H
 
-#include <json/json.hpp>
+#include "json/json.hpp"
 #include "Mesh.h"
 
 using json = nlohmann::json;

@@ -5,8 +5,8 @@
 #ifndef POLYRPG_VERTEX_H
 #define POLYRPG_VERTEX_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
+#include "glad/glad.h"
+#include "glm/glm.hpp"
 
 namespace Engine {
     struct Vertex {

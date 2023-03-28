@@ -5,17 +5,26 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/")
 
-file(GLOB_RECURSE SOURCE_FILES
-        ${CMAKE_SOURCE_DIR}/src/*.cpp)
+# Engine
+
+file(GLOB_RECURSE ENGINE_SOURCE_FILES
+        ${CMAKE_SOURCE_DIR}/engine/*.cpp)
+
+file(GLOB_RECURSE ENGINE_HEADER_FILES
+        ${CMAKE_SOURCE_DIR}/engine/*.h)
+
+# Editor
+
+file(GLOB_RECURSE EDITOR_SOURCE_FILES
+        ${CMAKE_SOURCE_DIR}/editor/*.cpp)
+
+file(GLOB_RECURSE EDITOR_HEADER_FILES
+        ${CMAKE_SOURCE_DIR}/editor/*.h)
 
 file(GLOB_RECURSE INCLUDE_SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/libs/*.cpp)
 
-# Add header files
-file(GLOB_RECURSE HEADER_FILES
-        ${CMAKE_SOURCE_DIR}/src/*.h)
-
-add_executable(PolyEditor src/main.cpp src/glad.c src/stb.cpp src/tinygltf.cpp ${HEADER_FILES} ${SOURCE_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h src/tinyobj.cpp src/editor/CustomImGuiStyle.h)
+add_executable(PolyEditor main.cpp glad.c stb.cpp tinygltf.cpp ${EDITOR_SOURCE_FILES} ${EDITOR_HEADER_FILES} ${ENGINE_SOURCE_FILES} ${ENGINE_HEADER_FILES} ${INCLUDE_SOURCE_FILES} libs/tinyobj/tiny_obj_loader.h tinyobj.cpp editor/CustomImGuiStyle.h)
 
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(PolyEditor glfw)
@@ -28,7 +37,7 @@ target_include_directories(PolyEditor PUBLIC ${INCLUDE_DIR})
 
 #Copy shaders
 file(GLOB_RECURSE SHADER_FILES
-        ${CMAKE_SOURCE_DIR}/src/shaders/*.glsl)
+        ${CMAKE_SOURCE_DIR}/shaders/*.glsl)
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/shaders")
 add_custom_command(TARGET PolyEditor PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SHADER_FILES} "${CMAKE_CURRENT_BINARY_DIR}/shaders")

@@ -5,8 +5,8 @@
 #ifndef POLYRPG_TEXTURE_H
 #define POLYRPG_TEXTURE_H
 
-#include <glad/glad.h>
-#include <stb/stb_image.h>
+#include "glad/glad.h"
+#include "stb/stb_image.h"
 
 #include "Shader.h"
 

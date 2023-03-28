@@ -5,8 +5,8 @@
 #ifndef POLYRPG_SCENEEDITORVIEW_H
 #define POLYRPG_SCENEEDITORVIEW_H
 
-#include <imgui/imgui.h>
-#include <glad/glad.h>
+#include "imgui/imgui.h"
+#include "glad/glad.h"
 #include <iostream>
 
 #include "BaseView.h"
